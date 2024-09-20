@@ -1,0 +1,14 @@
+.data/
+.DS_Store/
+.vector_cache/
+.idea/
+__pycache__/
+venv/
+DATASET/
+models/
+test.py
+*.pyc
+*.pkl
+*.pickle
+*.pdf
+*.model

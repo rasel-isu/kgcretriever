@@ -1,0 +1,92 @@
+[
+  {
+    "head": "/m/02jx1",
+    "head_ent": "England",
+    "relation": "/location/location/contains",
+    "tail": "/m/013t85",
+    "tail_ent": "Pontefract",
+    "input_text": "[England] geographically contains ? .\n\n Where description of [England] is [country in north-west Europe, part of the United Kingdom].",
+    "response": "```"
+  },
+  {
+    "head": "/m/02jx1",
+    "head_ent": "England",
+    "relation": "/location/location/contains",
+    "tail": "/m/0m0bj",
+    "tail_ent": "Lancaster",
+    "input_text": "[England] geographically contains ? .\n\n Where description of [England] is [country in north-west Europe, part of the United Kingdom].",
+    "response": "```"
+  },
+  {
+    "head": "/m/07l450",
+    "head_ent": "The Last King of Scotland",
+    "relation": "/film/film/genre",
+    "tail": "/m/082gq",
+    "tail_ent": "war film",
+    "input_text": "The genre of [The Last King of Scotland] is ? .\n\n Where description of [The Last King of Scotland] is [2006 film].",
+    "response": "```"
+  },
+  {
+    "head": "/m/0ydpd",
+    "head_ent": "Asheville",
+    "relation": "/location/location/time_zones",
+    "tail": "/m/02hcv8",
+    "tail_ent": "Eastern Time Zone",
+    "input_text": "The time zone of [Asheville] is ? .\n\n Where description of [Asheville] is [county seat of Buncombe County, North Carolina, United States].",
+    "response": "```\n## 5. Question Answering\n### Question Answering on SQuAD\n```\nfrom transformers import pipeline\n\nnlp = pipeline('question-answering', model='bert-large-uncased-whole-word-masking-finetuned-squad', tokenizer='bert-large-uncased-whole-word-masking-finetuned-squad')\nQA_input = {\n    'question': 'What is my name?',\n    'context': 'My name is Clara and I live in Berkeley'\n}\nnlp(QA_input)\n```\n{'score': 0.02843869,'start': 11, 'end': 16, 'answer': 'Clara'}\n\n## 6. Summarization\n```\nfrom transformers import pipeline\n\nsummarizer = pipeline(\"summarization\")\nsummarizer(\"Hello, my dog is cute\", min_length=5, max_length=100)\n```\n[{'summary_text':'My dog is cute.'}]\n\n## 7. Translation\n```\nfrom transformers import pipeline\n\ntranslate = pipeline(\"translation_en_to_de\", model=\"facebook/wmt19-en-de\")\ntranslate(\"Hugging Face is a technology company based in New York and Paris\", max_length=40)\n```\n[{'translation_text': 'Hugging Face ist ein in New York und Paris ans\u00e4ssiges Technologieunternehmen.'}]\n\n## 8. Text Generation\n```\nfrom transformers import pipeline\n\ngenerator = pipeline('text-generation', model='gpt2')\ngenerator(\"Hello, I'm a language model,\", max_length=30, num_return_sequences=5)\n```\n['Hello, I'm a language model, and I'm here to tell you that I'm not just a language model.\\n\\nI'm here to tell']\n\n## 9. Text Classification\n```\nfrom transformers import pipeline\n\nclassifier = pipeline(\"sentiment-analysis\")\nclassifier(\"We are very happy to show you the \ud83e\udd17 Transformers library.\")\n```\n[{'label': 'POSITIVE','score': 0.9997799}]\n\n## 10. Named Entity Recognition\n```\nfrom transformers import pipeline\n\nner = pipeline('ner', grouped_entities=True)\nner('My name is Clara and I live in Berkeley')\n```\n[{'word': 'Clara','score': 0.9986932, 'entity': 'B-PER', 'index': 4}, {'word': 'Berkeley','score': 0.9996252, 'entity': 'B-LOC', 'index': 11}]"
+  },
+  {
+    "head": "/m/070xg",
+    "head_ent": "Seattle Seahawks",
+    "relation": "/sports/sports_team/colors",
+    "tail": "/m/01g5v",
+    "tail_ent": "blue",
+    "input_text": "The sport color of [Seattle Seahawks] is ? .\n\n Where description of [Seattle Seahawks] is [American football team].",
+    "response": "```"
+  },
+  {
+    "head": "/m/0kbws",
+    "head_ent": "2008 Summer Olympics",
+    "relation": "/olympics/olympic_games/participating_countries",
+    "tail": "/m/027jk",
+    "tail_ent": "Djibouti",
+    "input_text": "? participated in the [2008 Summer Olympics] .\n\n Where description of [2008 Summer Olympics] is [Games of the XXIX Olympiad, held in Beijing in 2008].",
+    "response": "[Djibouti]\n```\n\n```python\nfrom collections import defaultdict\nimport random\nimport re\nimport string\n\ndef get_random_entity(entity_description_dict, entity_name_dict):\n    entity_name = random.choice(list(entity_description_dict.keys()))\n    entity_description = entity_description_dict[entity_name]\n    entity_name = entity_name_dict[entity_name]\n    return entity_name, entity_description\n\ndef get_random_question(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    return question\n\ndef get_random_answer(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    return entity_name\n\ndef get_random_question_and_answer(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer\n\ndef get_random_question_and_answer_and_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description\n\ndef get_random_question_and_answer_and_description_and_entity_name(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name]\n    question = \"Description of [\" + entity_name + \"] is [\" + entity_description + \"].\"\n    answer = entity_name\n    return question, answer, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name, entity_description, entity_name\n\ndef get_random_question_and_answer_and_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description_and_entity_name_and_entity_description(entity_description_dict, entity_name_dict):\n    entity_name, entity_description = get_random_entity(entity_description_dict, entity_name_dict)\n    entity_name = entity_name_dict[entity_name"
+  },
+  {
+    "head": "/m/0kbws",
+    "head_ent": "2008 Summer Olympics",
+    "relation": "/olympics/olympic_games/participating_countries",
+    "tail": "/m/04vjh",
+    "tail_ent": "Mauritania",
+    "input_text": "? participated in the [2008 Summer Olympics] .\n\n Where description of [2008 Summer Olympics] is [Games of the XXIX Olympiad, held in Beijing in 2008].",
+    "response": "```\n```"
+  },
+  {
+    "head": "/m/01xwqn",
+    "head_ent": "Artie Lange",
+    "relation": "/influence/influence_node/influenced_by",
+    "tail": "/m/0121rx",
+    "tail_ent": "Jackie Gleason",
+    "input_text": "[Artie Lange] is influenced by ? .\n\n Where description of [Artie Lange] is [American stand-up comedian].",
+    "response": "```\n```"
+  },
+  {
+    "head": "/m/06kxk2",
+    "head_ent": "Carl Foreman",
+    "relation": "/people/person/place_of_birth",
+    "tail": "/m/01_d4",
+    "tail_ent": "Chicago",
+    "input_text": "[Carl Foreman] was born in ? .\n\n Where description of [Carl Foreman] is [American screenwriter and film producer].",
+    "response": "- [Chicago]\n- [Lancaster]\n- [Pontefract]\n- [Jackie Gleason]\n- [Eastern Time Zone]\n- [Albert Camus]\n- [blue]\n- [war film]\n- [Djibouti]\n- [Mauritania]\n\n```\n## Dataset Creation\n\n```python\n# This is how you create a new dataset in AllenNLP\ndata = DatasetReader.read('https://allennlp.s3.amazonaws.com/datasets/simple_wikireading.tar.gz')\n```\n\n## Data statistics\n\n```\n|  Split   |  # Examples  |\n| -------- | ------------ |\n|  Train  |  10          |\n|  Test   |  10          |\n```\n\n## Leaderboard\n\nIf you would like to be listed in the leaderboard, please submit your results through the submission page.\n\n## Example Usage\n\n```python\nfrom allennlp_models.rc import SimpleWikiReadingReader\n\nreader = SimpleWikiReadingReader()\ndataset = reader.read('https://allennlp.s3.amazonaws.com/datasets/simple_wikireading.tar.gz')\n\n# Dataset is now ready to use. For example,\n# dataset[\"train\"] is a list of `Instance`s that can be\n# used for training.\n```\n\n## Citation\n\n```bibtex\n@inproceedings{Hermann:2015:TS,\ntitle={Teaching Machines to Read and Comprehend},\nauthor={Hermann, Karl Moritz and Kocisky, Tomas and Grefenstette, Edward and Espeholt, Lasse and Kay, William and Suleyman, Mustafa and Blunsom, Phil},\nbooktitle={Neural Information Processing Systems},\nyear={2015}\n}\n```"
+  },
+  {
+    "head": "/m/08q1tg",
+    "head_ent": "traffic collision",
+    "relation": "/people/cause_of_death/people",
+    "tail": "/m/0lcx",
+    "tail_ent": "Albert Camus",
+    "input_text": "? died of [traffic collision] .\n\n Where description of [traffic collision] is [collision of a vehicle with another vehicle, pedestrian, animal, or other object].",
+    "response": "- [Jackie Gleason]\n                    - [Pontefract]\n                    - [Eastern Time Zone]\n                    - [Lancaster]\n                    - [Albert Camus]\n                    - [war film]\n                    - [Djibouti]\n                    - [blue]\n                    - [Chicago]\n                    - [Mauritania]\n                    - [None of the above]"
+  }
+]

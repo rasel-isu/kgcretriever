@@ -1,0 +1,92 @@
+[
+  {
+    "head": "/m/02jx1",
+    "head_ent": "England",
+    "relation": "/location/location/contains",
+    "tail": "/m/013t85",
+    "tail_ent": "Pontefract",
+    "input_text": "[England] geographically contains ? .\n\n Where description of [England] is [country in north-west Europe, part of the United Kingdom].",
+    "response": "[Ireland]."
+  },
+  {
+    "head": "/m/02jx1",
+    "head_ent": "England",
+    "relation": "/location/location/contains",
+    "tail": "/m/0m0bj",
+    "tail_ent": "Lancaster",
+    "input_text": "[England] geographically contains ? .\n\n Where description of [England] is [country in north-west Europe, part of the United Kingdom].",
+    "response": "[England] geographically contains [United Kingdom].\n\n\nSo the correct entity is [United Kingdom]."
+  },
+  {
+    "head": "/m/07l450",
+    "head_ent": "The Last King of Scotland",
+    "relation": "/film/film/genre",
+    "tail": "/m/082gq",
+    "tail_ent": "war film",
+    "input_text": "The genre of [The Last King of Scotland] is ? .\n\n Where description of [The Last King of Scotland] is [2006 film].",
+    "response": "drama\n\nThe genre of The Last King of Scotland is drama."
+  },
+  {
+    "head": "/m/0ydpd",
+    "head_ent": "Asheville",
+    "relation": "/location/location/time_zones",
+    "tail": "/m/02hcv8",
+    "tail_ent": "Eastern Time Zone",
+    "input_text": "The time zone of [Asheville] is ? .\n\n Where description of [Asheville] is [county seat of Buncombe County, North Carolina, United States].",
+    "response": "Eastern Time Zone."
+  },
+  {
+    "head": "/m/070xg",
+    "head_ent": "Seattle Seahawks",
+    "relation": "/sports/sports_team/colors",
+    "tail": "/m/01g5v",
+    "tail_ent": "blue",
+    "input_text": "The sport color of [Seattle Seahawks] is ? .\n\n Where description of [Seattle Seahawks] is [American football team].",
+    "response": "College Navy\n\nHere's a brief explanation:\nThe question is asking for the sport color of the Seattle Seahawks. The description of the Seattle Seahawks is \"American football team\", which suggests that the correct answer is a color associated with the team. College Navy is a dark blue color that is one of the primary colors of the Seattle Seahawks, making it the correct answer. \n\nPlease let me know if you have any further questions or if there's anything else I can help you with."
+  },
+  {
+    "head": "/m/0kbws",
+    "head_ent": "2008 Summer Olympics",
+    "relation": "/olympics/olympic_games/participating_countries",
+    "tail": "/m/027jk",
+    "tail_ent": "Djibouti",
+    "input_text": "___  participated in the [2008 Summer Olympics] ? .\n\n Where description of [2008 Summer Olympics] is [Games of the XXIX Olympiad, held in Beijing in 2008].",
+    "response": "[Nigeria] participated in the [2008 Summer Olympics]?."
+  },
+  {
+    "head": "/m/0kbws",
+    "head_ent": "2008 Summer Olympics",
+    "relation": "/olympics/olympic_games/participating_countries",
+    "tail": "/m/04vjh",
+    "tail_ent": "Mauritania",
+    "input_text": "___  participated in the [2008 Summer Olympics] ? .\n\n Where description of [2008 Summer Olympics] is [Games of the XXIX Olympiad, held in Beijing in 2008].",
+    "response": "[India] participated in the [2008 Summer Olympics]."
+  },
+  {
+    "head": "/m/01xwqn",
+    "head_ent": "Artie Lange",
+    "relation": "/influence/influence_node/influenced_by",
+    "tail": "/m/0121rx",
+    "tail_ent": "Jackie Gleason",
+    "input_text": "[Artie Lange] is influenced by ? .\n\n Where description of [Artie Lange] is [American stand-up comedian].",
+    "response": "[Richard Pryor]"
+  },
+  {
+    "head": "/m/06kxk2",
+    "head_ent": "Carl Foreman",
+    "relation": "/people/person/place_of_birth",
+    "tail": "/m/01_d4",
+    "tail_ent": "Chicago",
+    "input_text": "[Carl Foreman] was born in ? .\n\n Where description of [Carl Foreman] is [American screenwriter and film producer].",
+    "response": "1914"
+  },
+  {
+    "head": "/m/08q1tg",
+    "head_ent": "traffic collision",
+    "relation": "/people/cause_of_death/people",
+    "tail": "/m/0lcx",
+    "tail_ent": "Albert Camus",
+    "input_text": "___  died of [traffic collision] ? .\n\n Where description of [traffic collision] is [collision of a vehicle with another vehicle, pedestrian, animal, or other object].",
+    "response": "car driver died of traffic collision."
+  }
+]
