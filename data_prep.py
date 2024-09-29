@@ -3,15 +3,15 @@ import re
 import pandas as pd
 
 
-triples = pd.read_csv(f"archive/test.txt", delimiter="\t", names=["head", "relation", "tail"])
-entity2definition_df = pd.read_csv(f"archive/entity2definition.txt", delimiter="\t", names=["id", "desc"])
+triples = pd.read_csv(f"DATASET/archive/test.txt", delimiter="\t", names=["head", "relation", "tail"])
+entity2definition_df = pd.read_csv(f"DATASET/archive/entity2definition.txt", delimiter="\t", names=["id", "desc"])
 entity2definition = dict(zip(entity2definition_df['id'], entity2definition_df['desc']))
-entity2label_df = pd.read_csv(f"archive/entity2label.txt", delimiter="\t", names=["id", "desc"])
+entity2label_df = pd.read_csv(f"DATASET/archive/entity2label.txt", delimiter="\t", names=["id", "desc"])
 entity2label = dict(zip(entity2label_df['id'], entity2label_df['desc']))
 
-with open(f"archive/relation2label.json") as f:
+with open(f"DATASET/archive/relation2label.json") as f:
     relation2label = json.load(f)
-with open(f"archive/relation2template.json") as f:
+with open(f"DATASET/archive/relation2template.json") as f:
     relation2template = json.load(f)
 
 def get_match_location(sentence, pattern):
@@ -36,34 +36,42 @@ def do_verb(template, head):
             '[Y]', f'?')
 sent = []
 entity_used = dict()
-for i in range(10):
-    h, r, t = triples.loc[i]['head'], triples.loc[i]['relation'], triples.loc[i]['tail']
+ec = 0
 
-    # entity_used[entity2label[h]] = entity2definition[h]
-    entity_used[entity2label[t]] = entity2definition[t]
+for i in range(len(triples)):
+    try:
+        h, r, t = triples.loc[i]['head'], triples.loc[i]['relation'], triples.loc[i]['tail']
 
-    template  = relation2template[r]
-    text = do_verb(template, entity2label[h])
-    # text = f'{template}'.replace(
-    #     '[X]',f'[{entity2label[h]}]').replace(
-    #     '[Y]', f'?')
+        # entity_used[entity2label[h]] = entity2definition[h]
+        entity_used[entity2label[t]] = entity2definition[t]
 
-    text = f'{text}\n\n Where description of [{entity2label[h]}] is [{entity2definition[h]}].'
+        template  = relation2template[r]
+        text = do_verb(template, entity2label[h])
+        # text = f'{template}'.replace(
+        #     '[X]',f'[{entity2label[h]}]').replace(
+        #     '[Y]', f'?')
 
-    sent.append({
-        'head':h,
-        'head_ent':entity2label[h],
-        'relation':r,
-        'tail':t,
-        'tail_ent': entity2label[t],
-        'input_text': text
-    })
+        text = f'{text}\n\n Where description of [{entity2label[h]}] is [{entity2definition[h]}].'
+
+        sent.append({
+            'head':h,
+            'head_ent':entity2label[h],
+            'relation':r,
+            'tail':t,
+            'tail_ent': entity2label[t],
+            'question': text
+        })
+    except Exception as e:
+        ec+=1
+print(f'Total failed : {ec}')
+print(f'Total Samaple : {len(sent)}')
+
 ent_desc = (f'Here, I am providing {len(entity_used)} target entity those are enclosed by [] bracket, also their description is given below. Read it carefully.'
             f'I will ask you some question from those entities. \n\n')
 for i, k in enumerate(entity_used):
     ent_desc += f'{i+1}. Description of [{k}] is [{entity_used[k]}].\n'
 
-with open('archive/questions_and_desc.json', 'w') as f:
+with open('DATASET/head_tail_query.json', 'w') as f:
     json.dump({
         'question':sent,
         'target_ent':ent_desc
